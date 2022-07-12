@@ -1,27 +1,31 @@
-var express = require("express");
-var router = express.Router();
-const credential = {
-    username = configselect.log_username,
-    password = configselect.log_password
-}
+const e = require("express");
+var expresss = require("express");
+var router = expresss.Router();
 
 //login_user
-router.post('/login_api.js',(req,res)=>{
-    if(req.body.username == credential.username&&req.body.password == credential.password){
-        req.session.user = req.body.username;
-        res.redirect('/views/index.html')
-    }else{
-        res.end("Invalid Username")
-    }
-})
+router.post("/", (req, res) => {
+  if (req.body.logsusername == log_use && req.body.logspassword == log_pass) {
+    req.session.user = req.body.log_username;
+    res.redirect("/views/index.html");
+  } else {
+    res.end("Invalid Username");
+  }
+});
 
-
+//create class
+class LogInuse {
+  constructor(log_id, log_use, log_pass) {
+    this.log_id = log_id;
+    this.log_use = log_username;
+    this.log_pass = log_password;
+  }
+}
 //DATABASE
 
 //connect
 const dboperations = require("./dboperations");
 var Db = require("./dboperations");
-var login_user = require("./login_api");
+var login_user = require("./server");
 
 dboperations.getlogin_user().then((result) => {
   console.log(result);
@@ -43,8 +47,6 @@ const configdetail = {
   port: 1433,
 };
 
-module.exports = configdetail;
-
 //select in DB
 var configselect = require("./dbconfig");
 const sql = require("mssql");
@@ -61,21 +63,7 @@ async function getlogin_user() {
 
 module.exports = {
   getlogin_user: getlogin_user,
+  LogInuse,
+  router,
+  configdetail,
 };
-
-//loginset
-const express = require("express");
-const app = express();
-const bodyparser = require("body-parser");
-const session = require("express-session");
-const { v4: uuidv4 } = require("uuid");
-
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(
-  session({
-    secret: uuidv4(),
-    resave: false,
-    saveUnintialized: true,
-  })
-);
